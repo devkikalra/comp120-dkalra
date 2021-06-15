@@ -18,7 +18,7 @@
     var lyrics = document.getElementById("lyrics");
     video.addEventListener("timeupdate", function() {
         if(video.currentTime < 5){
-            lyrics.innerHTML = "<h3>Checking if this works</h3>";
+            lyrics.innerHTML = "";
 
         } else if (video.currentTime > 6 && video.currentTime < 8){
             lyrics.innerHTML = "<h3>Come gather round, children,</h3>";
@@ -76,7 +76,7 @@
         }
     }, false); 
 
-	// Complete this section and create a CSS file named style.css
+
 </script>
 </body>
 </html>	
