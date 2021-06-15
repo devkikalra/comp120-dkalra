@@ -1,6 +1,7 @@
 All aspects of the lab have been correctly implemented: the map is centered on south station, all vehicles are marked on the map with the car icon image used as a marker, and I have performed all the specified performance enhancements. 
 
 Results of the performance enhancement techniques: 
+
 Before performance optimization: 
 * Page load times: 
     * Finish: 2.40s 
@@ -25,7 +26,7 @@ After minifying the CSS:
     * 244 B / 7.9 kB transferred
     * 17.8 kB / 1.6 MB resources
 
-After moving JS includes and code to the bottom of the HTML 
+After moving JS includes and code to the bottom of the HTML: 
 * Page load times: 
     * Finish: 1.53s
     * Load: 846ms 
