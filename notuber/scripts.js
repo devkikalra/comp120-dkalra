@@ -58,8 +58,6 @@ function displayCars() {
 
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); 
     var params = "username=DaPLuvLU" + "&lat=" + String(user_lat) + "&lng=" + String(user_lon);
-    console.log(user_lat); 
-    console.log(user_lon); 
     xhr.onreadystatechange = function() { 
         if(xhr.readyState == 4 && xhr.status == 200) { 
             jsonData = JSON.parse(xhr.responseText); 
