@@ -52,24 +52,18 @@ function createMap() {
 }
 
 function displayCars() { 
-    console.log("Here I am 1");
     xhr = new XMLHttpRequest(); 
 
     xhr.open("POST", "https://jordan-marsh.herokuapp.com/rides", true);
 
-    console.log("Here I am 2"); 
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); 
     var params = "username=DaPLuvLU" + "&lat=" + String(user_lat) + "&lng=" + String(user_lon);
     console.log(user_lat); 
     console.log(user_lon); 
     xhr.onreadystatechange = function() { 
-        console.log("Here I am 3"); 
         if(xhr.readyState == 4 && xhr.status == 200) { 
-            console.log("Here I am 4"); 
             jsonData = JSON.parse(xhr.responseText); 
-            console.log(xhr.responseText); 
             for (count = 0; count < jsonData.length; count++) { 
-                console.log("Here I am 7");
                 var vehicle = new google.maps.Marker({
                     position: {lat:jsonData[count].lat, lng:jsonData[count].lng}, 
                     map: map, 
@@ -79,12 +73,9 @@ function displayCars() {
             }
         }
     }; 
-    console.log("Here I am 5"); 
     xhr.send(params); 
-    console.log("Here I am 6"); 
 
 }
-
 
 
 
