@@ -1,27 +1,102 @@
+var user_lat = 0; 
+var user_lon = 0; 
 var map; 
+var marker; 
 var image = 'car.png'; 
-var vehicle_list = [
-    {vehicle_id: "mXfkjrFw", pos: {lat: 42.3453, lng:-71.0464}}, 
-    {vehicle_id: "nZXB8ZHz", pos: {lat:42.3662, lng: -71.0621}}, 
-    {vehicle_id: "Tkwu74WC", pos: {lat:42.3603, lng: -71.0547}}, 
-    {vehicle_id: "5KWpnAJN", pos: {lat:42.3472, lng: -71.0802}}, 
-    {vehicle_id: "uf5ZrXYw", pos: {lat:42.3663, lng: -71.0544}}, 
-    {vehicle_id: "VMerzMH8", pos: {lat:42.3542, lng: -71.0704}}, 
-]; 
 
-function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-		center: {lat: 42.352271, lng: -71.05524200000001},
-		zoom: 12
-    });
+function init() { 
+    var me = new google.maps.LatLng(user_lat, user_lon); 
+    console.log(user_lat); 
+    console.log(user_lon); 
+    var myOptions = {
+        zoom: 12, 
+        center: me, 
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    }; 
+    map = new google.maps.Map(document.getElementById('map'), myOptions); 
+    getMyLocation(); 
+}
 
-    for(var i in vehicle_list)
-    {
-        var vehicle = new google.maps.Marker({
-            position: vehicle_list[i].pos, 
-            map: map, 
-            icon: image
+function getMyLocation() { 
+    if(navigator.geolocation) { 
+        navigator.geolocation.getCurrentPosition(function(position) { 
+            user_lat = position.coords.latitude; 
+            user_lon = position.coords.longitude; 
+            createMap(); 
+            displayCars(); 
         }); 
+    } else { 
+        alert("Geolocation isn't supported by your web browser. What a shame!"); 
     }
 }
-	
+
+function createMap() { 
+    me = new google.maps.LatLng(user_lat, user_lon); 
+
+    //Update map and go there
+    map.panTo(me); 
+
+    //Create a marker
+    marker = new google.maps.Marker({
+        position: me, 
+        title: "Here I Am!"
+    }); 
+    marker.setMap(map); 
+
+    //Open info window on click of marker 
+    var infowindow = new google.maps.InfoWindow(); 
+    google.maps.event.addListener(marker,'click', function() { 
+        infowindow.setContent(marker.title); 
+        infowindow.open(map, marker); 
+    }); 
+}
+
+function displayCars() { 
+    console.log("Here I am 1");
+    xhr = new XMLHttpRequest(); 
+
+    xhr.open("POST", "https://jordan-marsh.herokuapp.com/rides", true);
+
+    console.log("Here I am 2"); 
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); 
+    var params = "username=DaPLuvLU" + "&lat=" + String(user_lat) + "&lng=" + String(user_lon);
+    console.log(user_lat); 
+    console.log(user_lon); 
+    xhr.onreadystatechange = function() { 
+        console.log("Here I am 3"); 
+        if(xhr.readyState == 4 && xhr.status == 200) { 
+            console.log("Here I am 4"); 
+            jsonData = JSON.parse(xhr.responseText); 
+            console.log(xhr.responseText); 
+            for (count = 0; count < jsonData.length; count++) { 
+                console.log("Here I am 7");
+                var vehicle = new google.maps.Marker({
+                    position: {lat:jsonData[count].lat, lng:jsonData[count].lng}, 
+                    map: map, 
+                    icon: image
+                }); 
+                marker.setMap(map); 
+            }
+        }
+    }; 
+    console.log("Here I am 5"); 
+    xhr.send(params); 
+    console.log("Here I am 6"); 
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
