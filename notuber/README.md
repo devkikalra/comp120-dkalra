@@ -1,6 +1,13 @@
-All aspects of the lab have been correctly implemented: the map is centered on south station, all vehicles are marked on the map with the car icon image used as a marker, and I have performed all the specified performance enhancements. 
+1. I have determined my geolocation and placed a marker of where I am on the map 
+2. I have made a succesful request to the ride-hailing API and have marked each vehicle from the list 
+    onto the map
+3. I have written a function (nearestCar()) which finds the shortest distance between me and a car and 
+    have confirmed that this works by using console.log(shortest_distance) statements. However, I was unable
+    to display this information in an infowindow as I was pressed on time. If possible, I am going to try to work on this before the end of the class. 
+4. I have not rendered a polyline which connects my marker to the marker of the closest vehicle. 
 
-Results of the performance enhancement techniques: 
+
+Results of the performance enhancement techniques (from part 1): 
 
 Before performance optimization: 
 * Page load times: 
