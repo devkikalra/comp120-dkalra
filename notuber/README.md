@@ -49,6 +49,6 @@ After minifying the JS:
     * 0 B / 8.5 kB transferred
     * 17.8 kB / 1.6 MB resources
 
-I worked on this lab independently and spent around 4-5 hours on it. 
+I worked on this lab independently and spent around 10-15 hours on it. 
 
     
