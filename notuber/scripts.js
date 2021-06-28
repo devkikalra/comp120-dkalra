@@ -6,8 +6,6 @@ var image = 'car.png';
 
 function init() { 
     var me = new google.maps.LatLng(user_lat, user_lon); 
-    console.log(user_lat); 
-    console.log(user_lon); 
     var myOptions = {
         zoom: 12, 
         center: me, 
@@ -69,10 +67,27 @@ function displayCars() {
                 }); 
                 marker.setMap(map); 
             }
+            nearestCar(); 
         }
     }; 
     xhr.send(params); 
+}
 
+function nearestCar() { 
+    //Calculate distance between me and first car in JSONdata (store in shortest distance variable)
+    //Calculate distance between me and all other cars in JSONdata --> if we find a shorter distance then shortest distance variable, 
+    //update the shortest distance variable --> display this in infowindow 
+    var car1 = new google.maps.LatLng(jsonData[0].lat, jsonData[0].lng); 
+    var shortest_distance = google.maps.geometry.spherical.computeDistanceBetween(me, car1); 
+
+    for (count = 0; count <jsonData.length; count++){
+        var point = new google.maps.LatLng(jsonData[count].lat, jsonData[count].lng); 
+        var distance = google.maps.geometry.spherical.computeDistanceBetween(me, point); 
+        if(distance < shortest_distance){
+            shortest_distance = distance; 
+            console.log(shortest_distance);
+        }
+    }
 }
 
 
