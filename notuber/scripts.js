@@ -26,6 +26,7 @@ function getMyLocation() {
     } else { 
         alert("Geolocation isn't supported by your web browser. What a shame!"); 
     }
+
 }
 
 function createMap() { 
@@ -52,7 +53,7 @@ function createMap() {
 function displayCars() { 
     xhr = new XMLHttpRequest(); 
 
-    xhr.open("POST", "https://jordan-marsh.herokuapp.com/rides", true);
+    xhr.open("POST", "https://dry-meadow-11596.herokuapp.com/rides", true);
 
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); 
     var params = "username=DaPLuvLU" + "&lat=" + String(user_lat) + "&lng=" + String(user_lon);
@@ -67,6 +68,7 @@ function displayCars() {
                 }); 
                 marker.setMap(map); 
             }
+
             nearestCar(); 
         }
     }; 
@@ -79,6 +81,7 @@ function nearestCar() {
     //update the shortest distance variable --> display this in infowindow 
     var car1 = new google.maps.LatLng(jsonData[0].lat, jsonData[0].lng); 
     var shortest_distance = google.maps.geometry.spherical.computeDistanceBetween(me, car1); 
+    console.log(shortest_distance); 
 
     for (count = 0; count <jsonData.length; count++){
         var point = new google.maps.LatLng(jsonData[count].lat, jsonData[count].lng); 
@@ -89,6 +92,9 @@ function nearestCar() {
         }
     }
 }
+
+
+
 
 
 
