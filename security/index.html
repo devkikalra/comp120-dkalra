@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Web Security Report</title>
+</head>
+
+<body vlink="white">
+    <header>Security Assessment of a Ride Hailing Service</header>
+    <p id = "name">Written by Devki Kalra</p>
+    <h2>Introduction</h2>
+        <p> The purpose of this lab is to identify and examine potential flaws and vulnerabilities
+            with the web application hosted at https://jordan-marsh.herokuapp.com/. This application 
+            was created by Ming Chow for the security lab of the COMP120 course. The app's function is to 
+            allow users to enter their username, longitude, and latitude. A number of security flaws found in the 
+            source code make this application unstable and unusable for public use. 
+        </p>
+    <h2>Methodoly</h2>
+        <p> I used curl on my local device. I tested the service by changing the parameters 
+            and checking the output on https://jordan-marsh.herokuapp.com/. I likewise used Burp 
+            to find additional vulnerabilities and/or gain a deeper understanding 
+            of the vulnerabilities I had already identified.
+        </p>
+    <h2>Abstract of Findings</h2>
+        <p>The biggest issues found in this security assessment concerned XSS and SQL injections. Each of the 
+            issues detected were high in severity and thus expose the massive vulnerabilities in this application. 
+            User input wasn't effectively sanitized allowing scripts to be stored and executed from the server, and poor 
+            restrictions around database access meant the contents of the database could be easily manipulated. 
+        </p>
+        
+    <h2>Issues Found</h2>
+        <ol>
+            <li>XSS Injection</li>
+                <ul>Issue: Injection into username parameter</ul>
+                <ul>Location: https://jordan-marsh.herokuapp.com/</ul>
+                <ul>Severity: <font color="red">HIGH</font></ul>
+                <ul>Description: The username parameter can take in any input. There is no such restriction or validator for 
+                    the username (like there is for the lat and lon values, as these must be floats). As a result, JavaScript 
+                    code could be passed in as the username parameter. This type of injection is referred to as an XSS injection.
+                </ul>
+                <ul>Resolution: This issue can be resolved by sanitizing the input. This could be 
+                    done through setting a limit on the number of characters that can be entered in the 
+                    username parameter. </ul>
+            <li>SQL Injection</li>
+                <ul>Issue: Injection into database</ul>
+                <ul>Location: https://jordan-marsh.herokuapp.com/</ul>
+                <ul>Severity: <font color="red">HIGH</font></ul>
+                <ul>Description: This issue was detected on Burp and arises when user-controllable data is incorporated 
+                    into database SQL queries. With this web application, users can easily manipulate the database with 
+                    a curl request. I should note that I didn't test this issue myself (in part because I wasn't sure how to)—the 
+                    SQL injection vulnerability was outlined in Burp. Nonetheless, I decided to include it in my report 
+                    because I understand the vulnerability.
+                </ul>
+                <ul>
+                    Resolution: According to the issue remediation outlined in Burp, the most effective way to prevent SQL 
+                    injection is to use 'parametized queries' for all database access. Meaning, the application should specify 
+                    both the structure of the query and contents of the variable. In this way, it is impossible for malformed data to 
+                    be injected into the database. 
+                </ul>
+        </ol>
+    <h2>Conclusion</h2>
+        <p></p>
+
+</body>
+</html>
+
