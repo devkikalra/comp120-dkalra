@@ -1,0 +1,1 @@
+All aspects of the work have been correctly implemented. I mentioned some of the drawbacks with my methodology and analysis in the assignment itself. I spent about 3-4 hours on this assignment and briefly discussed it with Jheanelle and Hezekiah. 
