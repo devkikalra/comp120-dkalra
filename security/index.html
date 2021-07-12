@@ -12,8 +12,8 @@
         <p> The purpose of this lab is to identify and examine potential flaws and vulnerabilities
             with the web application hosted at https://jordan-marsh.herokuapp.com/. This application 
             was created by Ming Chow for the security lab of the COMP120 course. The app's function is to 
-            allow users to enter their username, longitude, and latitude. A number of security flaws found in the 
-            source code make this application unstable and unusable for public use. 
+            allow users to enter their username, longitude, and latitude. A number of vulnerabilities 
+            were identified in this web application, making it unsafe and thus unusable for public use. 
         </p>
     <h2>Methodoly</h2>
         <p> I used curl on my local device. I tested the service by changing the parameters 
@@ -23,9 +23,9 @@
         </p>
     <h2>Abstract of Findings</h2>
         <p>The biggest issues found in this security assessment concerned XSS and SQL injections. Each of the 
-            issues detected were high in severity and thus expose the massive vulnerabilities in this application. 
-            User input wasn't effectively sanitized allowing scripts to be stored and executed from the server, and poor 
-            restrictions around database access meant the contents of the database could be easily manipulated. 
+            issues detected were high in severity and thus expose the major security flaws with this application. User 
+            input wasn't effectively sanitized and there were poor/no restrictions around database access—both of which 
+            left significant opportunities for breaches in security. 
         </p>
         
     <h2>Issues Found</h2>
@@ -34,22 +34,23 @@
                 <ul>Issue: Injection into username parameter</ul>
                 <ul>Location: https://jordan-marsh.herokuapp.com/</ul>
                 <ul>Severity: <font color="red">HIGH</font></ul>
-                <ul>Description: The username parameter can take in any input. There is no such restriction or validator for 
-                    the username (like there is for the lat and lon values, as these must be floats). As a result, JavaScript 
-                    code could be passed in as the username parameter. This type of injection is referred to as an XSS injection.
+                <ul>Description: The username parameter accepts any form of input. There is no such restriction or validator for 
+                    the username (like there is for the lat and lon values, for example). As a result, JavaScript 
+                    code could be passed in as the username parameter. This type of injection is referred to as an XSS injection, 
+                    wherein an attacker tricks a web application into sending data in a form that a user's browser can execute. 
                 </ul>
-                <ul>Resolution: This issue can be resolved by sanitizing the input. This could be 
-                    done through setting a limit on the number of characters that can be entered in the 
+                <ul>Resolution: This issue can be resolved by sanitizing the input. One of the ways in which this could be 
+                    done is by setting a limit on the number of characters that can be entered in the 
                     username parameter. </ul>
-            <li>SQL Injection</li>
+            <li>SQL Injection: malformed data</li>
                 <ul>Issue: Injection into database</ul>
                 <ul>Location: https://jordan-marsh.herokuapp.com/</ul>
                 <ul>Severity: <font color="red">HIGH</font></ul>
                 <ul>Description: This issue was detected on Burp and arises when user-controllable data is incorporated 
                     into database SQL queries. With this web application, users can easily manipulate the database with 
-                    a curl request. I should note that I didn't test this issue myself (in part because I wasn't sure how to)—the 
-                    SQL injection vulnerability was outlined in Burp. Nonetheless, I decided to include it in my report 
-                    because I understand the vulnerability.
+                    a curl request. Meaning, a user could insert pretty much any value into the database. I should note that I didn't 
+                    test this issue myself (in part because I wasn't sure how to)—the SQL injection vulnerability was outlined 
+                    in Burp. Nonetheless, I decided to include it in my report because I do understand the vulnerability.
                 </ul>
                 <ul>
                     Resolution: According to the issue remediation outlined in Burp, the most effective way to prevent SQL 
@@ -57,10 +58,22 @@
                     both the structure of the query and contents of the variable. In this way, it is impossible for malformed data to 
                     be injected into the database. 
                 </ul>
+            <li>SQL Injection: number of insertions into database</li>
+                <ul>Issue: Users can make any number of insertions into the database. </ul>
+                <ul>Location: https://jordan-marsh.herokuapp.com/</ul>
+                <ul>Severity: <font color="red">HIGH</font></ul>
+                <ul>Description: This issue, again, was outlined in Burp and wasn't tested directly by me. The issue 
+                    here is that the user can make an infinite number of insertions into the database, which could potentially
+                    crash the application. 
+                </ul>
+                <ul>Resolution: To resolve this issue, one could limit the number of entries into the database from a given IP address.</ul>
         </ol>
     <h2>Conclusion</h2>
-        <p></p>
-
+        <p>As can be seen, there are several major issues with this web application—all of which can be resolved by the 
+            solutions proposed above. This was a really interesting assignment as I would have never considered any of these issues—both
+            in the scope of this lab and in my daily life—if it weren't for this week's security module. The content covered in this 
+            assignment has drawn my attention to just how easy it can be to identify vulnerabilities in code, hack websites, and perform
+            malicious data breaches. Hopefully, after this assignment, I will actually listen when a website tells me my password isn't "strong" enough. </p>
 </body>
 </html>
 
